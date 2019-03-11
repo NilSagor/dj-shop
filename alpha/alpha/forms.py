@@ -20,3 +20,18 @@ class ContactForm(forms.Form):
 				"class" :"form-control",
 				"placeholder" : "Your message"
 			}))
+
+class LoginFoorm(forms.Form):
+	username = forms.CharField(
+		widget = forms.TextInput(
+			attrs = {
+				"class" :"form-control",
+				"placeholder" : "Your username"
+			}))
+	password = forms.CharField(
+		widget = forms.PasswordInput(
+			attrs = {
+				"class" :"form-control",
+				"placeholder" : "Your password"
+			}))
+
