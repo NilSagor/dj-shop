@@ -15,13 +15,38 @@ class ContactPageView(FormView):
 	def form_valid(self, form):
 		return super().form_valid(form)
 
-class LoginPageView(FormView):
-	template_name = 'auth/login.html'
-	form_class = LoginForm
-	success_url = '/logged/'
+# class LoginPageView(FormView):
+# 	template_name = 'auth/login.html'
+# 	form_class = LoginForm
+# 	success_url = '/logged/'
 
-	def form_valid(self, form):
+# 	def form_valid(self, form):
+# 		username = form.cleaned_data.get("username")
+# 		password = form.cleaned_data.get("password")
+# 		user = authenticate(useranem=username, password=password)
+# 		print(user.is_authenticated())
+# 		if user is not None:
+# 			login(user)
+# 		else:
+# 			print("Error")
+
+# 		return super().form_valid(form) 
+
+def loginPageView(request):
+	form_class = LoginForm(request.POST or None)
+	context = {
+		'form' : form_class
+	}
+	print("user logged in")
+	print(request.user.is_authenticated)
+	if form.is_valid():
+		print(form.cleaned_data)
 		username = form.cleaned_data.get("username")
 		password = form.cleaned_data.get("password")
-
-		return super().form_valid(form) 
+		user = authenticate(request, username=username, password=password)
+		if user is not None:
+			login(request, user)
+			return redirect("/login")
+		else:
+			print("Error")
+	return render(request, "auth/login.html", context)
