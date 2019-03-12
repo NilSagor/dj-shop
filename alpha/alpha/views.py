@@ -40,7 +40,7 @@ def loginPageView(request):
 		'form' : form_class
 	}
 	print("user logged in")
-	print(request.user.is_authenticated)
+	#print(request.user.is_authenticated)
 	if form_class.is_valid():
 		print(form_class.cleaned_data)
 		username = form_class.cleaned_data.get("username")
@@ -53,3 +53,17 @@ def loginPageView(request):
 		else:
 			print("Error")
 	return render(request, "auth/login.html", context)
+
+def RegisterPageView(request):
+	form_class = RegisterForm(request.POST or None)
+	context = {
+		'form' : form_class
+	}
+	if form.is_valid():
+		print(form_class.cleaned_data)
+		username = form_class.cleaned_data.get("username")
+		email = form_class.cleaned_data.get("email")
+		password = form_class.cleaned_data.get("password")
+		new_user = User.objects.create_user(username, email, password)
+		print(new_user)
+	return render(request, "auth/register.html", context)
