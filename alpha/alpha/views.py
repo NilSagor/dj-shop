@@ -1,10 +1,11 @@
-from django.contrib.auth import authenticate, login 
+from django.contrib.auth import authenticate, login,  get_user_model 
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
 
-from .forms import ContactForm, LoginForm
+
+from .forms import ContactForm, LoginForm, RegisterForm
 
 class HomePageView(TemplateView):
 	template_name = 'home.html'
@@ -54,12 +55,15 @@ def loginPageView(request):
 			print("Error")
 	return render(request, "auth/login.html", context)
 
+
+
+User = get_user_model()
 def RegisterPageView(request):
 	form_class = RegisterForm(request.POST or None)
 	context = {
 		'form' : form_class
 	}
-	if form.is_valid():
+	if form_class.is_valid():
 		print(form_class.cleaned_data)
 		username = form_class.cleaned_data.get("username")
 		email = form_class.cleaned_data.get("email")

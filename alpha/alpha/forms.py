@@ -69,9 +69,9 @@ class RegisterForm(forms.Form):
 
 	def clean_username(self):
 		username = self.cleaned_data.get("username")
-		qs = User.objects.filter(useraname = username)
+		qs = User.objects.filter(username = username)
 		if qs.exists():
-			raise forms.ValidationError("Usernaem is taken")
+			raise forms.ValidationError("Username is taken")
 		return username
 
 	def clean_email(self):
