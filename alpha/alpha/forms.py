@@ -35,3 +35,7 @@ class LoginForm(forms.Form):
 				"placeholder" : "Your password"
 			}))
 
+	def clean_usrname(self):
+		username = self.cleaned_data.get("username")
+		qs.User.objects.filter(useraname = username)
+
